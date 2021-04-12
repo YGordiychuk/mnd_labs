@@ -1,0 +1,42 @@
+import random
+import numpy as np
+
+x1 = np.array([random.uniform(-15, 15) for i in range(20)])
+x2 = np.array([random.uniform(-15, 15) for i in range(20)])
+x3 = np.array([random.uniform(-15, 15) for i in range(20)])
+
+a0, a1, a2, a3 = [random.randrange(-10, 10) for i in range(4)] 
+
+y = [a0 + a1 * x1[i] + a2 * x2[i] + a3 * x3[i] for i in range(len(x1))]
+
+x1_norm = []
+x2_norm = []
+x3_norm = []
+for i in range(len(x1)):
+    x1_norm.append((x1[i] - np.mean(x1)) / np.std(x1))
+    x2_norm.append((x2[i] - np.mean(x2)) / np.std(x2))
+    x3_norm.append((x3[i] - np.mean(x3)) / np.std(x3))
+
+
+
+etalon_x1_norm = 2
+for i in range(len(x1_norm)):
+    if np.abs(x1_norm[i]) < etalon_x1_norm:
+        etalon_x1_norm = np.abs(x1_norm[i])
+
+etalon_x2_norm = 2
+for i in range(len(x2_norm)):
+    if np.abs(x2_norm[i]) < etalon_x2_norm:
+        etalon_x2_norm = np.abs(x2_norm[i])
+
+etalon_x3_norm = 2
+for i in range(len(x3_norm)):
+    if np.abs(x3_norm[i]) < etalon_x3_norm:
+        etalon_x3_norm = np.abs(x3_norm[i])
+
+etalon_y = a0 + a1* etalon_x1_norm + a2 * etalon_x2_norm + a3 * etalon_x3_norm
+print("Etalon y = ", etalon_y)
+
+# my task - max(Y)
+maximal = max(y)
+print("The point of the plan that satisfies the given criterion of optimality -- max(Y) =", maximal)
